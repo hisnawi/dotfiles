@@ -8,6 +8,7 @@
 ;2.Update Prelude's code:
 ;cd ~/.emacs.d
 ;git pull
+;
 
 ;;; My packages - make sure they are installed
 (defvar rammari/packages
