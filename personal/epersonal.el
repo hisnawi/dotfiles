@@ -996,8 +996,8 @@ With a prefix arg, flip text with the line above the current."
 (global-set-key [C-down]       'scroll-up-command)
 
 ;; Navigate symbols
-(global-set-key [C-M-right]        'highlight-symbol-next)        ; highlight-symbol.el
-(global-set-key [C-M-left]         'highlight-symbol-prev)        ; highlight-symbol.el
+(bind-key* [C-M-right]        'highlight-symbol-next)        ; highlight-symbol.el
+(bind-key* [C-M-left]         'highlight-symbol-prev)        ; highlight-symbol.el
 
 ;; Kill entire line cursor is on
 (defun kill-entire-line ()

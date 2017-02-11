@@ -5,16 +5,22 @@
  ;; If there is more than one, they won't work right.
  '(ansi-color-names-vector
    ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
+ '(auto-compression-mode t nil (jka-compr))
+ '(case-fold-search t)
+ '(clean-buffer-list-delay-general 1)
  '(compilation-message-face (quote default))
  '(cua-global-mark-cursor-color "#2aa198")
  '(cua-normal-cursor-color "#657b83")
  '(cua-overwrite-cursor-color "#b58900")
  '(cua-read-only-cursor-color "#859900")
+ '(current-language-environment "English")
  '(custom-enabled-themes (quote (rammari)))
  '(custom-safe-themes
    (quote
-    ("c74e83f8aa4c78a121b52146eadb792c9facc5b1f02c917e3dbb454fca931223" "0fcb0741741c3a64741daef09da3371cac251c4afe1e46b6e90e52f5cd2cff54" "442d8fb3d1d81db851c1a87a361c1e8889f251cd1c5d8cd9f6cc4f79aeaae40e" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "9d91458c4ad7c74cf946bd97ad085c0f6a40c370ac0a1cbeb2e3879f15b40553" "8c34c930fb413e01712459bd1e60c0a95867a1d239a9f182b1e7acb33b3d746b" "19a463196172effc18ef37f3deed85834a63a1ee3fcac85a63731ab207ec13af" "296ad3b52be94bc3772dbd76da213efa0948a7bbf690f62c0cf3e8717f43cc20" default)))
+    ("8c34c930fb413e01712459bd1e60c0a95867a1d239a9f182b1e7acb33b3d746b" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "943bff6eada8e1796f8192a7124c1129d6ff9fbd1a0aed7b57ad2bf14201fdd4" default)))
+ '(ecb-options-version "2.40")
  '(fci-rule-color "#383838")
+ '(global-font-lock-mode t nil (font-lock))
  '(highlight-changes-colors (quote ("#d33682" "#6c71c4")))
  '(highlight-symbol-colors
    (--map
@@ -38,16 +44,74 @@
  '(hl-fg-colors
    (quote
     ("#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3" "#fdf6e3")))
+ '(ibuffer-expert t)
+ '(ibuffer-fontification-alist
+   (quote
+    ((10 buffer-read-only font-lock-constant-face)
+     (15
+      (and buffer-file-name
+           (string-match ibuffer-compressed-file-name-regexp buffer-file-name))
+      font-lock-doc-face)
+     (20
+      (string-match "^*"
+                    (buffer-name))
+      font-lock-preprocessor-face)
+     (25
+      (and
+       (string-match "^ "
+                     (buffer-name))
+       (null buffer-file-name))
+      italic)
+     (30
+      (memq major-mode ibuffer-help-buffer-modes)
+      font-lock-comment-face)
+     (35
+      (eq major-mode
+          (quote dired-mode))
+      (:foreground "goldenrod4" :weight bold))
+     (40
+      (eq major-mode
+          (quote c-mode))
+      font-lock-function-name-face)
+     (45
+      (eq major-mode
+          (quote asm-mode))
+      font-lock-keyword-face)
+     (50
+      (eq major-mode
+          (quote text-mode))
+      font-lock-warning-face)
+     (55
+      (string-match ".*ras.*"
+                    (buffer-name))
+      font-lock-comment-face)
+     (60
+      (string-match ".*io_mem.*"
+                    (buffer-name))
+      font-lock-comment-face)
+     (65
+      (eq major-mode
+          (quote cperl-mode))
+      cperl-hash-face))))
  '(magit-diff-use-overlays nil)
+ '(message-required-mail-headers (quote (Message-ID (optional . X-Mailer))))
  '(nrepl-message-colors
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(pos-tip-background-color "#eee8d5")
  '(pos-tip-foreground-color "#586e75")
+ '(require-final-newline t)
+ '(safe-local-variable-values (quote ((c-indentation-style . bsd))))
+ '(show-paren-mode t nil (paren))
  '(smartrep-mode-line-active-bg (solarized-color-blend "#859900" "#eee8d5" 0.2))
+ '(tab-stop-list
+   (quote
+    (3 9 11 15 19 23 27 31 35 39 43 47 51 55 59 63 67 71 75 79 83 87 91 95 99 103 107 111 115 119)))
  '(term-default-bg-color "#fdf6e3")
  '(term-default-fg-color "#657b83")
+ '(transient-mark-mode t)
+ '(truncate-lines t)
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-background-mode nil)
  '(vc-annotate-color-map
