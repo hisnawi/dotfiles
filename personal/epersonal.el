@@ -11,33 +11,33 @@
 ;;
 
 ;;f1;
-;(global-set-key [f1]           'delete-other-windows)
-;(global-set-key [S-f1]         'delete-window)
-;(global-set-key [C-f1]         'toggle-scroll-bar)            ; defined
-;(global-set-key [M-f1]         'sync-window-dual)             ; defined
-;(global-set-key [C-M-f1]       'compare-windows)
-;(global-set-key [S-C-M-f1]     'beginning-of-buffers)         ; defined
+(global-set-key [f1]           'delete-other-windows)
+(global-set-key [S-f1]         'delete-window)
+(global-set-key [C-f1]         'toggle-scroll-bar)            ; defined
+(global-set-key [M-f1]         'sync-window-dual)             ; defined
+(global-set-key [C-M-f1]       'compare-windows)
+(global-set-key [S-C-M-f1]     'beginning-of-buffers)         ; defined
 ;(global-set-key [s-C-M-f1]     'objdump-thobp)                ; defined
 ;(global-set-key [A-C-M-f1]     'objdump-thobp)                ; defined
 ;(global-set-key [s-C-M-S-f1]   'objdump-file)                 ; defined
 ;(global-set-key [A-C-M-S-f1]   'objdump-file)                 ; defined
 ;
 ;;f2;
-;(global-set-key [f2]           'other-window)
-;(global-set-key [S-f2]         'split-window-vertically)
-;(global-set-key [C-f2]         'split-window-horizontally)
+(global-set-key [f2]           'other-window)
+(global-set-key [S-f2]         'split-window-vertically)
+(global-set-key [C-f2]         'split-window-horizontally)
 ;(global-set-key [s-C-M-f2]     'makelist-s5obp)               ; defined
 ;(global-set-key [A-C-M-f2]     'makelist-s5obp)               ; defined
 ;(global-set-key [s-C-M-S-f2]   'makelist-file)                ; defined
 ;(global-set-key [A-C-M-S-f2]   'makelist-file)                ; defined
 ;
 ;;f3;
-;(global-set-key [f3]           'kill-this-buffer)
-;(global-set-key [S-f3]         'kill-other-buffer)            ; defined
-;(global-set-key [C-f3]         'kill-buffer)
+(global-set-key [f3]           'kill-this-buffer)
+(global-set-key [S-f3]         'kill-other-buffer)            ; defined
+(global-set-key [C-f3]         'kill-buffer)
 ;(global-set-key [C-M-f3]       'toggle-scroll-bar-killblame)  ; defined
-;(global-set-key [s-C-M-f3]     'strip-newlines)               ; defined
-;(global-set-key [A-C-M-f3]     'strip-newlines)               ; defined
+(global-set-key [s-C-M-f3]     'strip-newlines)               ; defined
+(global-set-key [A-C-M-f3]     'strip-newlines)               ; defined
 ;;(global-set-key [S-f3]         'save-buffer)
 ;
 ;;f4;
@@ -70,8 +70,8 @@
 ;(global-set-key [C-M-f6]       'sync-window-mode)             ; defined
 ;
 ;;f7;
-;(global-set-key [f7]           'my-next-error-wrapped)        ; defined - Move down in comp. window
-;(global-set-key [C-f7]         'my-previous-error-wrapped)    ; defined - Move up in comp. window
+(global-set-key [f7]           'my-next-error-wrapped)        ; defined - Move down in comp. window
+(global-set-key [C-f7]         'my-previous-error-wrapped)    ; defined - Move up in comp. window
 ;(global-set-key [S-f7]         'del-and-set-frame-width-80)   ; defined
 ;;(global-set-key [S-f7]         'win-resize-min-sm-vert-gap)   ; defined
 ;;(global-set-key [f7]           'shrink-window-horizontally)
@@ -80,23 +80,23 @@
 ;;f8;
 ;(global-set-key [f8]           'win-resize-minimize-vert-gap) ; defined - far
 ;(global-set-key [C-f8]         'win-resize-enlarge-vert-gap)  ; defined - close
-;(global-set-key [S-f8]         'balance-windows)
+(global-set-key [S-f8]         'balance-windows)
 ;;(global-set-key [f8]           'enlarge-window-horizontally)
 ;;(global-set-key [C-f8]         'view-file)
 ;
 ;;f9;
-;(global-set-key [f9]           'sm-find-tag-other-window)     ; defined
-;(global-set-key [S-f9]         'sm-find-tag)                  ; defined
-;(global-set-key [C-f9]         'find-tag-other-window)
-;(global-set-key [M-f9]         'find-tag-other-window)
-;(global-set-key [M-S-f9]       'find-tag)                     ; defined
-;(global-set-key [C-M-f9]       'compile-etags)                ; defined
-;(global-set-key [C-M-S-f9]     'compile-etags-nodef)          ; defined
+(global-set-key [f9]           'sm-find-tag-other-window)     ; defined
+(global-set-key [S-f9]         'sm-find-tag)                  ; defined
+(global-set-key [C-f9]         'find-tag-other-window)
+(global-set-key [M-f9]         'find-tag-other-window)
+(global-set-key [M-S-f9]       'find-tag)                     ; defined
+(global-set-key [C-M-f9]       'compile-etags)                ; defined
+(global-set-key [C-M-S-f9]     'compile-etags-nodef)          ; defined
 ;
 ;;f10;
-;(global-set-key [f10]          'revert-all-buffers)           ; defined
-;(global-set-key [S-f10]        'view-file)
-;(global-set-key [M-f10]        'rename-buffer)
+(global-set-key [f10]          'revert-all-buffers)           ; defined
+(global-set-key [S-f10]        'view-file)
+(global-set-key [M-f10]        'rename-buffer)
 ;(global-set-key [C-f10]        'kdiff3)                       ; defined
 ;
 ;;f11;
