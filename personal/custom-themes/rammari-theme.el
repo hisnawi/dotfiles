@@ -25,6 +25,7 @@
  '(mode-line-buffer-id ((t (:foreground "blue" :weight bold))))
  '(region ((t (:background "LightGoldenrod2" :foreground nil))))
  '(highlight ((t (:background "Gray85"))))
+ '(helm-selection ((t (:background "lightblue")))) 
  '(default ((t (:family "DejaVu Sans Mono" :foundry "unknown" :width normal :height 113 :weight normal :slant normal :underline nil :overline nil :strike-through nil :box nil :inverse-video nil :foreground "black" :background "Gray90" :stipple nil :inherit nil)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;

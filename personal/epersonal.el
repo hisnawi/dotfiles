@@ -100,7 +100,7 @@
 ;(global-set-key [C-f10]        'kdiff3)                       ; defined
 ;
 ;;f11;
-;;Sun-f11			       
+;;Sun-f11
 ;(global-set-key [SunF36]       'ahg-log-cur-file-new)         ; defined - aHg.el
 ;(global-set-key [S-SunF36]     'compile-revdiff)              ; defined
 ;(global-set-key [C-SunF36]     'ahg-status)                   ; aHg.el
@@ -117,7 +117,7 @@
 ;(global-set-key [C-M-S-f11]    'ahg-log-view-diff-ver)        ; defined - aHg.el
 ;
 ;;f12;
-;;Sun-f12			       
+;;Sun-f12
 ;(global-set-key [SunF37]       'compile-make)                 ; defined
 ;(global-set-key [S-SunF37]     'compile-makeunix)             ; defined
 ;(global-set-key [C-SunF37]     'compile-makethobp)            ; defined
@@ -159,6 +159,7 @@
     highlight-symbol
     igrep
     irony
+    monky
     )
   )
 (dolist (p rammari/packages)
@@ -278,6 +279,12 @@
 
 ;;; Prelude
 ;;  Personal setup/overwrites
+(blink-cursor-mode 1)               ;; Cursor blinking
+;; For shift-select region
+(global-unset-key (vector (list 'shift 'left)))
+(global-unset-key (vector (list 'shift 'right)))
+(global-unset-key (vector (list 'shift 'up)))
+(global-unset-key (vector (list 'shift 'down)))
 (setq prelude-flyspell nil)         ;; Disable flyspell mode
 (setq prelude-whitespace nil)       ;; Disable whitespace marking
 (setq prelude-guru nil)             ;; Disable warning on arrow key navigation
@@ -370,8 +377,8 @@
 (setq large-file-warning-threshold 100000000)
 
 ;; Directory configs
-(dired "./")                                       ; Start emacs with current directory 
-(setq list-directory-verbose-switches "")   
+(dired "./")                                       ; Start emacs with current directory
+(setq list-directory-verbose-switches "")
 (setq dired-listing-switches "-al")                ;Sort dired list alphabetically '-alt by date'
 (if (equal default-directory "/") (setq default-directory "~/"))
 
@@ -689,7 +696,7 @@ only when the buffer of the active window is in `sync-window-mode'."
     (setq sync-window-mode-active t)    ;Both
     (with-selected-window (or window (selected-window))
       (when sync-window-mode
-	(sit-for 0)                     ;Both  
+	(sit-for 0)                     ;Both
         (Xsync-window display-start)))
     (setq sync-window-mode-active nil)) ;Both
   )
@@ -747,7 +754,7 @@ only when the buffer of the active window is in `sync-window-mode'."
   (point-to-register :saved-pos1)
   (message "Saved position to register 1"))
 (global-set-key (kbd "C-M-)")  'register-set1)
- 
+
 (defun register-jump1 ()
   (interactive)
   ;; Saved position found.
@@ -763,7 +770,7 @@ only when the buffer of the active window is in `sync-window-mode'."
   (point-to-register :saved-pos2)
   (message "Saved position to register 2"))
 (global-set-key (kbd "C-M-(")  'register-set2)
- 
+
 (defun register-jump2 ()
   (interactive)
   ;; Saved position found.
@@ -779,7 +786,7 @@ only when the buffer of the active window is in `sync-window-mode'."
   (point-to-register :saved-pos3)
   (message "Saved position to register 3"))
 (global-set-key (kbd "C-M-*")  'register-set3)
- 
+
 (defun register-jump3 ()
   (interactive)
   ;; Saved position found.
@@ -1003,20 +1010,20 @@ With a prefix arg, flip text with the line above the current."
 (defun kill-entire-line ()
   "Kill the whole line that point is on.(eam)"
   (interactive)
-  (forward-line 1) 
-  (let ((end (point))) 
-  (forward-line -1) 
+  (forward-line 1)
+  (let ((end (point)))
+  (forward-line -1)
   (kill-region (point) end)))
 (global-set-key "\C-x\C-d"       'kill-entire-line)
 
 ;; Duplicate entire line
 (defun my-c-mode-common-hook ()
-  (define-key c-mode-base-map "\C-c\C-d" nil)    ; unbind c-hungry-delete-forward 
+  (define-key c-mode-base-map "\C-c\C-d" nil)    ; unbind c-hungry-delete-forward
   (define-key c-mode-base-map "\C-c\C-c" nil)    ; unbind C-c C-c
   )
 (add-hook 'c-mode-common-hook 'my-c-mode-common-hook)
 (defun my-c++-mode-common-hook ()
-  (define-key c++-mode-base-map "\C-c\C-d" nil)    ; unbind c++-hungry-delete-forward 
+  (define-key c++-mode-base-map "\C-c\C-d" nil)    ; unbind c++-hungry-delete-forward
   (define-key c++-mode-base-map "\C-c\C-c" nil)    ; unbind C-c C-c
   )
 (add-hook 'c++-mode-common-hook 'my-c++-mode-common-hook)
@@ -1031,9 +1038,9 @@ With a prefix arg, flip text with the line above the current."
 (defun duplicate-entire-line ()
   "Copy the whole line that point is on.(eam)"
   (interactive)
-  (forward-line 1) 
-  (let ((end (point))) 
-  (forward-line -1) 
+  (forward-line 1)
+  (let ((end (point)))
+  (forward-line -1)
   (copy-region-as-kill (point) end)
   (paste-line)))
 (global-set-key "\C-c\C-d"       'duplicate-entire-line)
@@ -1058,7 +1065,7 @@ With a prefix arg, flip text with the line above the current."
          (replace-regexp-in-string "[<>]" "" (regexp-quote tag)))))
   (recenter 10)
   )
-  
+
 (defun sm-find-tag-other-window2 ()
   (interactive)
   (find-tag-other-window (funcall (or find-tag-default-function
@@ -1152,7 +1159,7 @@ With a prefix arg, flip text with the line above the current."
 		    (compile (concat "g++ -std=c++11 " file-name " -o " file-name ".o; "))
 		    "./" file-name ".o;")
 		   (t (message "Not a recognized mode.")))))
-    
+
     )
   )
 
@@ -1198,7 +1205,7 @@ With a prefix arg, flip text with the line above the current."
 ;                     s:switch between date and alpha order ^:parent directory
 ; M-g : goto line
 ; C-l : center buffer to cursor position
-; In C: C-M-a:Beginning of a function, C-M-e:End of a function 
+; In C: C-M-a:Beginning of a function, C-M-e:End of a function
 ; C-M-f C-M-b to find forward and backward matching brackets
 ;
 ; While using (next-error) hit C-u at end of results to reset from beginning
@@ -1248,7 +1255,7 @@ With a prefix arg, flip text with the line above the current."
 ;  *Keyboard Layout Options:
 ;  -Alt/Win Key behavior: Alt is mapped to Right Win, Super to Menu (At work)
 ;                         Meta is mapped to Left Win (At home)
-;  -Key sequence to kill X server: Tick 
+;  -Key sequence to kill X server: Tick
 ;  -Miscellaneous compatibility options: Special key (Ctrl+Alt+<key>) handled in a server
 ;  *Keyboard Shortcuts:
 ;  -Switch to workspace on left of current workspace:  Ctrl+alt+Mod4+[
@@ -1264,5 +1271,3 @@ With a prefix arg, flip text with the line above the current."
 ;   2.Update Prelude's code:
 ;     cd ~/.emacs.d
 ;     git pull
-
-
