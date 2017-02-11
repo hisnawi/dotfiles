@@ -1271,3 +1271,40 @@ With a prefix arg, flip text with the line above the current."
 ;   2.Update Prelude's code:
 ;     cd ~/.emacs.d
 ;     git pull
+
+;; Prelude shortcuts:
+;;;;;;;;;;;;;;;;;;;;;
+;; C-^          Join two lines into one(crux-top-join-line).
+;; C-x m        Start eshell
+;; C-h C-m	Display key bindings of current major mode and descriptions of every binding.
+;; C-x C-b	Open ibuffer (a replacement for the default buffer-list).
+;; C-x g	Open Magit's status buffer.
+;; C-x M-g	Open Magit's popup of popups.
+;; C-a	        Run crux-move-beginning-of-line.
+;; C-c i	Search for a symbol, only for buffers that contain code
+;; Super-o	Insert an empty line above the current line and indent it properly.
+;; M-o	        Insert an empty line and indent it properly (as in most IDEs).
+;; M-S-up	Move the current line or region up.
+;; M-S-down	Move the current line or region down.
+;; C-c n	Fix indentation in buffer and strip whitespace.
+;; C-c f	Open recently visited file.
+;; C-M-\	Indent region (if selected) or the entire buffer.
+;; C-c s	Swap two active windows.
+;; C-c D	Delete current file and buffer.
+;; C-c d	Duplicate the current line (or region).
+;; C-c M-d	Duplicate and comment the current line (or region).
+;; C-c k	Kill all open buffers except the one you're currently in.
+;; C-c TAB	Indent and copy region to clipboard
+;; Super-g	Toggle between God mode and non-God mode
+;; Super-r	Recent files
+;; Super-j	Join lines
+;; Super-k	Kill whole line
+;; Super-m m	Magit status
+;; Super-m l	Magit log
+;; Super-m f	Magit file log
+;; Super-m b	Magit blame mode
+;; M-y	        Run helm-show-kill-ring, shows the content of kill-ring.
+;; C-x b	Run helm-mini, an interactive version of C-x b with more features.
+;; C-x C-f	Run helm-find-files, an interactive version of find-file with more features.
+;; C-c p        Projectile
+;; C-c h        Helm
