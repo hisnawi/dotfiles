@@ -17,7 +17,7 @@
  '(custom-enabled-themes (quote (rammari)))
  '(custom-safe-themes
    (quote
-    ("9d91458c4ad7c74cf946bd97ad085c0f6a40c370ac0a1cbeb2e3879f15b40553" "d758adbafc62ba02b978080113c6a863d6f2a640a14c1bbc03326e1f3d5a1b51" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "943bff6eada8e1796f8192a7124c1129d6ff9fbd1a0aed7b57ad2bf14201fdd4" default)))
+    ("49473656c4a904419bb68b79447192ab7bcd3b87479b44db4c5af849b43b512f" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "943bff6eada8e1796f8192a7124c1129d6ff9fbd1a0aed7b57ad2bf14201fdd4" default)))
  '(ecb-options-version "2.40")
  '(fci-rule-color "#383838")
  '(global-font-lock-mode t nil (font-lock))

@@ -37,7 +37,7 @@
 ;; Add some highlighted keywords: Functions, Defines, Macros
 ;list of attributes:
 ;http://www.gnu.org/software/emacs/manual/html_node/elisp/Face-Attributes.html
-
+(when t ;nil
 ; Function for #if 0
 (defun my-c-mode-font-lock-if0 (limit)
 (save-restriction
@@ -187,6 +187,8 @@ nil)
    )
  'prepend
  )
+)
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;Special Modes - End   ;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
