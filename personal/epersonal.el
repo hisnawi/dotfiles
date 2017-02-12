@@ -1,7 +1,6 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;; My personal configs -*- emacs-lisp -*-
-;;;;; Starter package: https://github.com/bbatsov/prelude
-;;;;; Default gnu emacs24.4 - rammari  02/10/2017
+;;;;; Default gnu emacs24.4 - rammari  02/11/2017
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -118,7 +117,7 @@
 ;
 ;;f12;
 ;;Sun-f12
-;(global-set-key [SunF37]       'compile-make)                 ; defined
+(global-set-key [SunF37]       'compile-make)                 ; defined
 ;(global-set-key [S-SunF37]     'compile-makeunix)             ; defined
 ;(global-set-key [C-SunF37]     'compile-makethobp)            ; defined
 ;(global-set-key [s-C-SunF37]   'copy-rustthobp)               ; defined
@@ -129,7 +128,7 @@
 ;(global-set-key [s-C-M-S-SunF37] 'shell-hgpull)               ; defined
 ;(global-set-key [A-C-M-S-SunF37] 'shell-hgpull)               ; defined
 ;;MAC-f12
-;(global-set-key [f12]          'compile-make)                 ; defined
+(global-set-key [f12]          'compile-make)                 ; defined
 ;(global-set-key [S-f12]        'compile-makeunix)             ; defined
 ;(global-set-key [C-f12]        'compile-makethobp)            ; defined
 ;(global-set-key [s-C-f12]      'copy-rustthobp)               ; defined
@@ -175,13 +174,15 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;; highlight-symbol
-(add-hook 'c-mode-hook   (lambda () (highlight-symbol-mode 1)))
-(add-hook 'c++-mode-hook (lambda () (highlight-symbol-mode 1)))
-(add-hook 'asm-mode-hook (lambda () (highlight-symbol-mode 1)))
+;(add-hook 'c-mode-hook   (lambda () (highlight-symbol-mode 1)))
+;(add-hook 'c++-mode-hook (lambda () (highlight-symbol-mode 1)))
+;(add-hook 'asm-mode-hook (lambda () (highlight-symbol-mode 1)))
+(highlight-symbol-mode 0)
 
 ;;; Helm
 ;; General configs
-(helm-autoresize-mode 1) ; Auto resize helm buffer
+(helm-autoresize-mode 1)    ; Auto resize helm buffer
+(setq ag-reuse-buffers 't)  ; Reuse ag buffers
 
 ;; Remove dotted Dired in the beginning of helm-find-file
 (require 'cl-lib)
@@ -277,7 +278,8 @@
 (define-key projectile-mode-map [?\s-t] 'projectile-find-tag)
 (define-key projectile-mode-map [?\s-a] 'helm-do-grep-ag)
 
-;;; Prelude
+;;; Prelude;
+;;  https://github.com/bbatsov/prelude
 ;;  Personal setup/overwrites
 (blink-cursor-mode 1)               ;; Cursor blinking
 ;; For shift-select region
@@ -286,12 +288,13 @@
 (global-unset-key (vector (list 'shift 'up)))
 (global-unset-key (vector (list 'shift 'down)))
 (setq prelude-flyspell nil)         ;; Disable flyspell mode
+(global-flycheck-mode 0)            ;; Disable flycheck mode globally
 (setq prelude-whitespace nil)       ;; Disable whitespace marking
 (setq prelude-guru nil)             ;; Disable warning on arrow key navigation
 (setq prelude-lisp-coding-hook nil) ;; Disable strict coding mode in lisp
-(global-flycheck-mode 0)            ;; Disable flycheck mode globally
 (global-hl-line-mode 0)             ;; Disable highlight current line
 (beacon-mode 0)                     ;; Disable visual effects on scroll
+(setq scroll-conservatively 0)      ;; Recenter Isearch
 (setq frame-title-format
       '("" (:eval (if (buffer-file-name)
 		      (abbreviate-file-name
@@ -329,8 +332,7 @@
 
 ;Settings
 (setq tramp-default-method "sshx")
-(setq tramp-default-user "rammari"
-      tramp-default-host "asg1-usca-09") ;then conect with /sshx:::
+(setq tramp-default-user "rammari" tramp-default-host "asu-xxx-99") ;then conect with /sshx:::
 (add-to-list 'Info-default-directory-list "~/.emacs.d/tramp/info/")
 (setq password-cache-expiry nil)
 (setq vc-handled-backends nil)
@@ -361,6 +363,7 @@
 (setq comint-scroll-to-bottom-on-input  t)
 (setq comint-scroll-show-maximum-output t)
 (setq default-truncate-lines t)
+(setq recentf-auto-cleanup 'never)                 ; Disable stat-ting recent files
 
 ;; Disable minimizing window key binding
 (global-set-key "\C-x\C-z" nil)
@@ -598,6 +601,16 @@
 	"blatantly ignore files that changed on disk")
       (defun ask-user-about-lock (file opponent)
 	"always grab lock" t))
+  )
+;; Work Specific
+(if (string-match "^sca-*" (system-name))
+    (progn
+      (setq package-enable-at-startup nil)
+      (setq package-archives '(("melpa" . "/workspace/rammari/mirror-elpa/melpa/")
+                               ("org"   . "/workspace/rammari/mirror-elpa/org/")
+                               ("gnu"   . "/workspace/rammari/mirror-elpa/gnu/")))
+      (package-initialize)
+      )
   )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1271,6 +1284,15 @@ With a prefix arg, flip text with the line above the current."
 ;   2.Update Prelude's code:
 ;     cd ~/.emacs.d
 ;     git pull
+
+;; To bypass trouble connecting to internet through vpn:
+;; Download melpa source from: https://github.com/syl20bnr/spacemacs-elpa-mirror
+;; Then follow https://github.com/ninrod/emacs-antiproxy
+;(setq package-enable-at-startup nil)
+;(setq package-archives '(("melpa" . "/workspace/rammari/mirror-elpa/melpa/")
+;                         ("org"   . "/workspace/rammari/mirror-elpa/org/")
+;                         ("gnu"   . "/workspace/rammari/mirror-elpa/gnu/")))
+;(package-initialize)
 
 ;; Prelude shortcuts:
 ;;;;;;;;;;;;;;;;;;;;;

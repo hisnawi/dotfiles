@@ -26,6 +26,9 @@
  '(region ((t (:background "LightGoldenrod2" :foreground nil))))
  '(highlight ((t (:background "Gray85"))))
  '(helm-selection ((t (:background "lightblue")))) 
+ '(helm-source-header ((t (:background "LightGreen" :weight bold :height 130)))) 
+ '(helm-grep-lineno ((t (:foreground "Maroon4" :weight bold)))) 
+ '(helm-grep-file ((t (:foreground "DarkGreen" :weight bold)))) 
  '(default ((t (:family "DejaVu Sans Mono" :foundry "unknown" :width normal :height 113 :weight normal :slant normal :underline nil :overline nil :strike-through nil :box nil :inverse-video nil :foreground "black" :background "Gray90" :stipple nil :inherit nil)))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -104,7 +107,8 @@ nil)
  '(
    ("^#[ \t]*\\(ifdef\\|else\\|ifndef\\|if !?[ \t]defined\\|if\\|elif\\|endif\\|ident\\).*$"  (1 font-lock-constant-face      t))   ;#defines
 ;   ("\\(^#[ \t]*define\\|^#[ \t]*include\\|^#[ \t]*undef\\).*$"                               (1 font-lock-function-name-face t))   ;other #s
-   ("\\(^#[ \t]*define\\|^#[ \t]*include\\|^#[ \t]*undef\\).*$"                               (1 '(:foreground "#00008b" :weight bold) t))   ;other #s
+   ;("\\(^#[ \t]*define\\|^#[ \t]*include\\|^#[ \t]*undef\\).*$"                               (1 '(:foreground "#00008b" :weight bold) t))   ;other #s
+   ("\\(^#[ \t]*define\\|^#[ \t]*include\\|^#[ \t]*undef\\).*$"                               (1 font-lock-function-name-face t))   ;other #s
    ("\\(^#[ \t]*if 0\\|^#[ \t]*if FIXME\\).*$"                                                (1 font-lock-warning-face       t))   ;#if 0 
    ("\\<\\([A-Z0-9_]*\\)\\([ \t]*\\)("                                                        (1 font-lock-reference-face t))       ;MACROS()
    (my-c-mode-font-lock-if0                                                                   (1 font-lock-comment-face prepend t)) ;#if 0 code
@@ -123,7 +127,8 @@ nil)
    ("\\<\\([U]?Word[36][24]\\|[U]?Halfword\\|Bool\\|FPdouble\\|Byte\\)\\>"                     1 font-lock-type-face)            ;RUST specific
    ("\\<\\(if\\|else\\|else if\\|for\\|while\\|switch\\|default\\)\\>"                         1 font-lock-keyword-face)         ;C specific
    ("\\<\\([A-Z]*[a-z0-9_]+\\)\\([ \t]*\\)("                                                   1 font-lock-function-name-face)   ;functions()
-   ("\\<\\([A-Z]*[a-zA-z0-9_]+\\)\\([ \t]*\\)::"                                              (1 '(:foreground "#9b30ff" :weight bold) t)) ;classes()
+   ("\\<\\([A-Z]*[a-zA-z0-9_]+\\)\\([ \t]*\\)::"                                               1 font-lock-function-name-face)   ;classes()
+   ;("\\<\\([A-Z]*[a-zA-z0-9_]+\\)\\([ \t]*\\)::"                                              (1 '(:foreground "#9b30ff" :weight bold) t)) ;classes()
 ;   ("\\<\\([A-Z0-9_]*\\)\\([ \t]*\\)("                                                         1 font-lock-reference-face)       ;MACROS()
 ;   ("\\<\\([A-Z0-9_]*\\)\\([ \t]*\\)("                                                        (1 '(:foreground "#ff1493" :weight bold) t)) ;MACROS()
    ("\\<\\([A-Z_][A-Z0-9_]*\\)\\>"                                                             1 font-lock-constant-face)        ;CONSTANTS
@@ -168,6 +173,10 @@ nil)
 (font-lock-add-keywords
  'asm-mode
  '(
+   ; The next two rules are for comments
+   ("\\(^!.*\\)"                                                                               (1 font-lock-comment-face t))      ;! comments
+   ("^[^#][^!]*\\(!.*\\)"                                                                      (1 font-lock-comment-face t))      ;to negated !defined
+
    ("\\(^#[ \t]*define\\|^#[ \t]*include\\|^#[ \t]*undef\\).*$"                               (1 font-lock-function-name-face t)) ;other #s
    ("^#[ \t]*\\(ifdef\\|else\\|ifndef\\|if !?[ \t]defined\\|if\\|elif\\|endif\\|ident\\).*$"  (1 font-lock-constant-face      t)) ;#defines 
    ("\\(^#[ \t]*if 0\\|^#[ \t]*if FIXME\\|^#[ \t]*if PORTME\\|^#[ \t]*ifdef FIXME\\|^#[ \t]*ifdef PORTME\\).*$" (1 font-lock-warning-face       t)) ;#if 0   
