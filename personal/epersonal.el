@@ -1,6 +1,70 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;; My personal configs -*- emacs-lisp -*-
-;;;;; Default gnu emacs24.4 - rammari  02/11/2017
+;;;;; Default gnu emacs24.4 - rammari  02/14/2017
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;+; Platform Specific # 1 - Start
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; Get current system's name
+(defun insert-system-name()
+(interactive)
+"Get current system's name"
+(insert (format "%s" system-name)))
+
+;; Work Specific
+(if (string-match "^sca-*" (system-name))
+    (progn
+      ;;On first run place this code in core/prelude-packages.el after melpa
+      (setq package-enable-at-startup nil)
+      (setq package-archives '(("melpa" . "/workspace/rammari/mirror-elpa/melpa/")
+                               ("org"   . "/workspace/rammari/mirror-elpa/org/")
+                               ("gnu"   . "/workspace/rammari/mirror-elpa/gnu/")))
+      (package-initialize)
+      )
+  )
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;-; Platform Specific # 1 - End
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;+; My packages - Start
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;Make sure these packages are installed
+(defvar rammari/packages
+  '(
+    ahg
+    bind-key
+    company-irony
+    helm-swoop
+    highlight-symbol
+    igrep
+    irony
+    monky
+    )
+  )
+(dolist (p rammari/packages)
+  (when (not (package-installed-p p))
+    (package-install p)))
+
+;; Install use-package
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+
+(setq use-package-minimum-reported-time .001
+      use-package-verbose t
+      use-package-always-defer t
+      use-package-always-ensure t)
+
+(eval-when-compile
+  (require 'use-package))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;-; My packages - End
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -17,18 +81,14 @@
 (global-set-key [C-M-f1]       'compare-windows)
 (global-set-key [S-C-M-f1]     'beginning-of-buffers)         ; defined
 ;(global-set-key [s-C-M-f1]     'objdump-thobp)                ; defined
-;(global-set-key [A-C-M-f1]     'objdump-thobp)                ; defined
 ;(global-set-key [s-C-M-S-f1]   'objdump-file)                 ; defined
-;(global-set-key [A-C-M-S-f1]   'objdump-file)                 ; defined
 ;
 ;;f2;
 (global-set-key [f2]           'other-window)
 (global-set-key [S-f2]         'split-window-vertically)
 (global-set-key [C-f2]         'split-window-horizontally)
 ;(global-set-key [s-C-M-f2]     'makelist-s5obp)               ; defined
-;(global-set-key [A-C-M-f2]     'makelist-s5obp)               ; defined
 ;(global-set-key [s-C-M-S-f2]   'makelist-file)                ; defined
-;(global-set-key [A-C-M-S-f2]   'makelist-file)                ; defined
 ;
 ;;f3;
 (global-set-key [f3]           'kill-this-buffer)
@@ -36,7 +96,6 @@
 (global-set-key [C-f3]         'kill-buffer)
 ;(global-set-key [C-M-f3]       'toggle-scroll-bar-killblame)  ; defined
 (global-set-key [s-C-M-f3]     'strip-newlines)               ; defined
-(global-set-key [A-C-M-f3]     'strip-newlines)               ; defined
 ;;(global-set-key [S-f3]         'save-buffer)
 ;
 ;;f4;
@@ -45,9 +104,7 @@
 ;(global-set-key [M-f4]         'gid-select)                   ; defined
 ;(global-set-key [C-M-f4]       'highlight-symbol-mode)        ; highlight-symbol.el
 ;(global-set-key [s-C-M-f4]     'highlight-symbol-at-point)    ; highlight-symbol.el
-;(global-set-key [A-C-M-f4]     'highlight-symbol-at-point)    ; highlight-symbol.el
 ;(global-set-key [s-C-M-S-f4]   'highlight-symbol-remove-all)  ; highlight-symbol.el
-;(global-set-key [A-C-M-S-f4]   'highlight-symbol-remove-all)  ; highlight-symbol.el
 ;
 ;;f5;
 ;(global-set-key [f5]           'occur-token-forward)          ; defined
@@ -64,7 +121,6 @@
 ;(global-set-key [C-f6]         'grep-curr-word-in-curr-dir)   ; defined - selected in current folder
 ;(global-set-key [M-f6]         'igrep-find)                   ; defined - all options
 ;(global-set-key [s-f6]         'igrep-find)                   ; defined - all options
-;(global-set-key [A-f6]         'igrep-find)                   ; defined - all options
 ;(global-set-key [S-f6]         'win-swap)                     ; defined
 ;(global-set-key [C-M-f6]       'sync-window-mode)             ; defined
 ;
@@ -121,52 +177,21 @@
 ;(global-set-key [S-SunF37]     'compile-makeunix)             ; defined
 ;(global-set-key [C-SunF37]     'compile-makethobp)            ; defined
 ;(global-set-key [s-C-SunF37]   'copy-rustthobp)               ; defined
-;(global-set-key [A-C-SunF37]   'copy-rustthobp)               ; defined
 ;(global-set-key [M-SunF37]     'compile-makes5obp)            ; defined
 ;(global-set-key [s-C-M-SunF37] 'shell-pullmake)               ; defined
-;(global-set-key [A-C-M-SunF37] 'shell-pullmake)               ; defined
 ;(global-set-key [s-C-M-S-SunF37] 'shell-hgpull)               ; defined
-;(global-set-key [A-C-M-S-SunF37] 'shell-hgpull)               ; defined
 ;;MAC-f12
 (global-set-key [f12]          'compile-make)                 ; defined
 ;(global-set-key [S-f12]        'compile-makeunix)             ; defined
 ;(global-set-key [C-f12]        'compile-makethobp)            ; defined
 ;(global-set-key [s-C-f12]      'copy-rustthobp)               ; defined
-;(global-set-key [A-C-f12]      'copy-rustthobp)               ; defined
 ;(global-set-key [M-f12]        'compile-makes5obp)            ; defined
 ;(global-set-key [C-M-f12]      'compare-windows)
 ;(global-set-key [s-C-M-f12]    'shell-pullmake)               ; defined
-;(global-set-key [A-C-M-f12]    'shell-pullmake)               ; defined
 ;(global-set-key [s-C-M-S-f12]  'shell-hgpull)                 ; defined
-;(global-set-key [A-C-M-S-f12]  'shell-hgpull)                 ; defined
 ;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;-; Setting keys - End
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;+; My packages - Start
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;;Make sure these packages are installed
-(defvar rammari/packages
-  '(
-    ahg
-    bind-key
-    company-irony
-    helm-swoop
-    highlight-symbol
-    igrep
-    irony
-    monky
-    )
-  )
-(dolist (p rammari/packages)
-  (when (not (package-installed-p p))
-    (package-install p)))
-
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;-; My packages - End
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -180,6 +205,8 @@
 (highlight-symbol-mode 0)
 
 ;;; Helm
+(require 'prelude-helm-everywhere)
+
 ;; General configs
 (helm-autoresize-mode 1)    ; Auto resize helm buffer
 (setq ag-reuse-buffers 't)  ; Reuse ag buffers
@@ -278,15 +305,20 @@
 (define-key projectile-mode-map [?\s-t] 'projectile-find-tag)
 (define-key projectile-mode-map [?\s-a] 'helm-do-grep-ag)
 
+;;; Wind move
+(windmove-default-keybindings 'super) ;; Bind switching window to super
+
 ;;; Prelude;
 ;;  https://github.com/bbatsov/prelude
 ;;  Personal setup/overwrites
+(menu-bar-mode 1)                   ;; Show bar menu
 (blink-cursor-mode 1)               ;; Cursor blinking
 ;; For shift-select region
 (global-unset-key (vector (list 'shift 'left)))
 (global-unset-key (vector (list 'shift 'right)))
 (global-unset-key (vector (list 'shift 'up)))
 (global-unset-key (vector (list 'shift 'down)))
+(setq shift-selection-mode t)       ;; Enable selection using shift key
 (setq prelude-flyspell nil)         ;; Disable flyspell mode
 (global-flycheck-mode 0)            ;; Disable flycheck mode globally
 (setq prelude-whitespace nil)       ;; Disable whitespace marking
@@ -301,7 +333,30 @@
 		       (buffer-file-name))"%b")))) ;; Change buffer title
 
 ;;; TRAMP
-(when nil ;t
+;;https://github.com/emacsmirror/tramp
+; To connect /ssh:login@server or /ssh::. to connect to default
+; To enable X windows over ssh: "ssh -CY rammari@asg1-usca-09"
+; Make sure your aliases and PATH are in .bashrc file, since tramp only deals with bash
+; When you get test -e no exit errors do M-x tramp-clean-all-conections
+(when t; nil
+;;Library Changes for Solaris:
+; In file tramp-sh.el change HISTFILE to this "HISTFILE=/dev/null"
+; Use tramp-sh.el file from tramp release 2.2.10-pre on solaris -> (which) bug  
+		     
+(require 'tramp)                                            ;enable on linux
+;(load-library "~/.emacs.d/tramp-master/lisp/tramp.el")      ;enable on solaris
+;(load-library "~/.emacs.d/tramp-master/lisp/tramp-sh.el")   ;enable on solaris-modified file
+;(load-library "~/.emacs.d/tramp-master/lisp/tramp-cmds.el")
+;(load-library "~/.emacs.d/tramp-master/lisp/tramp-adb.el")
+;(load-library "~/.emacs.d/tramp-master/lisp/tramp-cache.el")
+;(load-library "~/.emacs.d/tramp-master/lisp/tramp-compat.el")
+;(load-library "~/.emacs.d/tramp-master/lisp/tramp-efs.el")
+;(load-library "~/.emacs.d/tramp-master/lisp/tramp-ftp.el")
+;(load-library "~/.emacs.d/tramp-master/lisp/tramp-gvfs.el")
+;(load-library "~/.emacs.d/tramp-master/lisp/tramp-gw.el")
+;(load-library "~/.emacs.d/tramp-master/lisp/tramp-smb.el")
+;(load-library "~/.emacs.d/tramp-master/lisp/tramp-uu.el")
+
 ; Force a bash shell option
 (add-to-list 'tramp-methods
   '("rssh"
@@ -332,14 +387,76 @@
 
 ;Settings
 (setq tramp-default-method "sshx")
-(setq tramp-default-user "rammari" tramp-default-host "asu-xxx-99") ;then conect with /sshx:::
-(add-to-list 'Info-default-directory-list "~/.emacs.d/tramp/info/")
+(setq tramp-default-user "rammari"
+      tramp-default-host "sca-ss-01") ;then conect with /sshx:::
+(add-to-list 'Info-default-directory-list (concat user-emacs-directory (convert-standard-filename "tramp/info/")))
 (setq password-cache-expiry nil)
 (setq vc-handled-backends nil)
 ;; Backup (file~) disabled
 (add-to-list 'backup-directory-alist (cons tramp-file-name-regexp nil))
+
+;Load PATH - no longer needed
+(add-to-list 'tramp-remote-path "/import/ftap-rust1/tools/bin")  
+;(add-to-list 'tramp-remote-path "~/bin")                         
+;(add-to-list 'tramp-remote-path "/usr/dist/exe")                 
+;(add-to-list 'tramp-remote-path "/usr/dt/bin")			    
+;(add-to-list 'tramp-remote-path "$OPENWINHOME/bin")		    
+;(add-to-list 'tramp-remote-path "/usr/sbin")			    
+;(add-to-list 'tramp-remote-path "/bin")			    
+;(add-to-list 'tramp-remote-path "/usr/bin")			    
+;(add-to-list 'tramp-remote-path "/etc")			    
+;(add-to-list 'tramp-remote-path "/usr/etc")			    
+;(add-to-list 'tramp-remote-path ".")				    
+;(add-to-list 'tramp-remote-path "/import/datools/local/cad/bin")   
+;(add-to-list 'tramp-remote-path "/usr/bin")			    
+;(add-to-list 'tramp-remote-path "/import/pdtools/bin")		    
+;(add-to-list 'tramp-remote-path "/import/un-tools/exe")            
+;(add-to-list 'tramp-remote-path "/import/datools/exe") 
+;(add-to-list 'tramp-remote-path "/import/freetools/exe")
+
+;The longer the line the bigger possibility of a hang - so spare the next
+;;(add-to-list 'tramp-remote-path "/usr/ucb") ;causes one line directory
+;;(add-to-list 'tramp-remote-path "/usr/ccs/bin")
+;;(add-to-list 'tramp-remote-path "/usr/ccs/lib")
+;;(add-to-list 'tramp-remote-path "/import/pdtools/release/pdt/14.01.0245/exe")
+;;(add-to-list 'tramp-remote-path "/import/drm-enzo/bin")
+;;(add-to-list 'tramp-remote-path "/import/drm-enzo/sbin")
+;;(add-to-list 'tramp-remote-path "/import/datools/vendor/forte/s1s8/SUNWspro/bin")
+;;(add-to-list 'tramp-remote-path "/usr/atria/bin")
+
+; By default includes the full path which is long -> causing a hang on solaris
+(add-to-list 'tramp-remote-path "/bin")                         ;disable on solaris, enable on linux
+(add-to-list 'tramp-remote-path 'tramp-own-remote-path)         ;disable on solaris, enable on linux
+;(load-library (concat user-emacs-directory (convert-standard-filename "exec-path-from-shell.el")))             ;disable on solaris, enable on linux
+
+;(setq tramp-shell-prompt-pattern "^\\(\[asg1-usca-[0-9]*:rammari\]%\\)*")
+
 ;debug
-;(setq tramp-verbose 10)
+(setq tramp-verbose 10)
+
+;For grep to work with Tramp from gnu linux, Make these changes:
+;(defvar igrep-find-use-xargs nil)
+;(defvar igrep-regex-option nil)
+
+;;For Tramp and Mercurial in file Monky.el, this needs some more work:
+;(defun monky-get-root-dir ()
+;  (if (and (featurep 'tramp)
+;	   (tramp-tramp-file-p default-directory))
+;      (monky-get-tramp-root-dir)
+;    (monky-get-local-root-dir)))
+;(defun monky-get-local-root-dir ()
+;  (let ((root (monky-hg-string "root")))
+;    (if root
+;	(error "Not inside a hg repo"))))
+;(defun monky-get-tramp-root-dir ()
+;  (let ((root (monky-hg-string "root"))
+;	(tramp-path (tramp-dissect-file-name default-directory)))
+;    (if root
+;	(progn (aset tramp-path 3 root)
+;	       (concat (apply 'tramp-make-tramp-file-name (append tramp-path ()))
+;		       "/"))
+;      (error "Not inside a hg repo"))))
+
 ) ;end when
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -364,6 +481,7 @@
 (setq comint-scroll-show-maximum-output t)
 (setq default-truncate-lines t)
 (setq recentf-auto-cleanup 'never)                 ; Disable stat-ting recent files
+(setq dired-dwim-target t)                         ; Guess target window for copy files
 
 ;; Disable minimizing window key binding
 (global-set-key "\C-x\C-z" nil)
@@ -527,14 +645,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;+; Platform Specific - Start
+;;+; Platform Specific # 2 - Start
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-
-;; Get current system's name
-(defun insert-system-name()
-(interactive)
-"Get current system's name"
-(insert (format "%s" system-name)))
 
 ;; Get current system type
 (defun insert-system-type()
@@ -564,6 +676,7 @@
 (if (system-type-is-unix)
     (progn
       ;;Fonts
+      (set-face-font 'default "-unknown-DejaVu Sans Mono-normal-normal-normal-*-12-*-*-*-m-0-iso10646-1")
       ;; Set default height/width
       (add-to-list 'default-frame-alist '(width . 180))
       (add-to-list 'default-frame-alist '(height . 70))
@@ -602,19 +715,9 @@
       (defun ask-user-about-lock (file opponent)
 	"always grab lock" t))
   )
-;; Work Specific
-(if (string-match "^sca-*" (system-name))
-    (progn
-      (setq package-enable-at-startup nil)
-      (setq package-archives '(("melpa" . "/workspace/rammari/mirror-elpa/melpa/")
-                               ("org"   . "/workspace/rammari/mirror-elpa/org/")
-                               ("gnu"   . "/workspace/rammari/mirror-elpa/gnu/")))
-      (package-initialize)
-      )
-  )
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;;-; Platform Specific - End
+;;-; Platform Specific # 2 - End
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -859,7 +962,7 @@ only when the buffer of the active window is in `sync-window-mode'."
   (transpose-lines 1)
   (forward-line -2)
   (indent-according-to-mode))
-(global-set-key [s-M-up]   'move-line-up)
+(global-set-key [M-s-up]   'move-line-up)
 
 (defun move-line-down ()
   "Move down the current line."
@@ -868,7 +971,7 @@ only when the buffer of the active window is in `sync-window-mode'."
   (transpose-lines 1)
   (forward-line -1)
   (indent-according-to-mode))
-(global-set-key [s-M-down] 'move-line-down)
+(global-set-key [M-s-down] 'move-line-down)
 
 (defun flip-text-to-eol (&optional arg)
   "Flip the text from point to the end of the current line with the text
@@ -1231,115 +1334,118 @@ With a prefix arg, flip text with the line above the current."
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;+;  Notes - Start
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;
-; *Helpful Notes*
-;----------------
-; To help with lagginess on big files with many comments, disabole font-lock-mode
-; M-x font-lock-mode
-;
-; To load a specific init file emacs -q -l ~/.emacs-alt
-;
-; ESC-! allows you to execute a shell command
-;
-; Disable auto-wrap "toggle it": M-x auto-fill-mode
-;
-; C<SPC> set mark, C<U>,C<SPC> return to mark
-; Region commands:
-; Format paragraphs: M-q
-; Indent : C-M-\
-; Comment: C-c C-c ,  uncomment C-u C-c C-c
-; Comment/uncomment (region) : M-;
-; Align  : C-u M-x align
-; Replace : M-% ->  y:replace and go to next , n    :don't replace and go to next
-;                   !:replace all, ,:replace , del  :skip and go to next
-;                 C-r:recursive edit mode    , C-M-c:exit recursive edit mode
-; Uppercase : C-x C-u , Lowercase : C-x C-l
-;
-; isearch history : C-s M-p/M-n
-; remove spaces from this line to above one : M-^ , to below: C-u M-^
-; Emacs Shell : M-x eshell
-; Manipulate rectangles: C-x r "t:insert" "o:open" "k:kill" "y:yank"
-; C-u [len] [character] will place len characters on a line
-; C-x C-v revert changes to last saved version.
-; In directory view : c:will copy and g:will refresh d:delete x:excute deletion
-;                     s:switch between date and alpha order ^:parent directory
-; M-g : goto line
-; C-l : center buffer to cursor position
-; In C: C-M-a:Beginning of a function, C-M-e:End of a function
-; C-M-f C-M-b to find forward and backward matching brackets
-;
-; While using (next-error) hit C-u at end of results to reset from beginning
-;
-; Use Emacs Calculator with "M-x calc" :
-; d r "choose base" 16/0/2
-; to do 2+1 enter: 2 enter 1 enter +
-;
-; Printing alias: mp -l -s "\!*" <\!* | lp
-;
-; enriched-mode:
-;  Alt-o d default
-;  Alt-o b bold
-;  Alt-o i italic
-;  Alt-o I italic+bold
-;  Alt-o u underline
-;					;
-; Moving in emacs C-f:forward C-b:backward C-p:up C-n:down
-;                 M-f:forward word M-b:backward word
-;                 C-d:f.delete M-v:pageup C-v:pagedown
-;                 M-<:beginning of buffer M->:end of buffer
-;                 C-a:beginning of line C-e:end of line
-;
-; AHG: In status mode: = diff file, o goto file, D diff all,
-;                      space mark files, U revert marked/all files
-;
-;
-; Searching IDs:   1. mkid in the highest directory path - do this on every pull
-;                     Or to trim directories:
-;alias mkidrust  'mkid ' look up MKALL
-;                  2. M-x compile or F4
-;                  3. gid 'search'  it is an EXACT MATCH
-;
-; Searching etags: 1. etags in the highest directory and include all files
-;alias etagsrust 'etags ...' look up MKALL
-;                  2. find-tag while pointing at the tag in your file
-;
-;alias mkall 'echo "making IDs";mkidrust;echo "making TAGs";etagsrust;echo "Done"'
-;
-; Build etags: find . -type f -iname "*.[ch]" | etags -
-;
-;~/.emacs.d/diredful-conf.el file:
-;("special" "s-files" "txt-files" "h-files" "c-files")
-;(("special" (:foreground "forestgreen") ".*ras.* io_mem.*" t nil nil nil) ("s-files" (:foreground "maroon") "s" nil nil nil nil) ("txt-files" (:foreground "red") "txt" nil nil nil nil) ("h-files" (:foreground "blue") "h" nil nil nil nil) ("c-files" (:foreground "blue") "c" nil nil nil nil))
-
-; **Solaris VNC options:
-;  *Keyboard Layout Options:
-;  -Alt/Win Key behavior: Alt is mapped to Right Win, Super to Menu (At work)
-;                         Meta is mapped to Left Win (At home)
-;  -Key sequence to kill X server: Tick
-;  -Miscellaneous compatibility options: Special key (Ctrl+Alt+<key>) handled in a server
-;  *Keyboard Shortcuts:
-;  -Switch to workspace on left of current workspace:  Ctrl+alt+Mod4+[
-;  -Switch to workspace on right of current workspace: Ctrl+alt+Mod4+]
-;
-;;For debug:
-;(setq debug-on-error t)
-; To add/edit/del to diredful: M-x diredful-add, M-x diredful-edit, M-x diredful-del
 ;;
-;;; To manually update prelude and the packages installed:
-;   1.Update all bundled packages:
-;     Just run M-x package-list-packages RET U x.
-;   2.Update Prelude's code:
-;     cd ~/.emacs.d
-;     git pull
-
-;; To bypass trouble connecting to internet through vpn:
-;; Download melpa source from: https://github.com/syl20bnr/spacemacs-elpa-mirror
-;; Then follow https://github.com/ninrod/emacs-antiproxy
-;(setq package-enable-at-startup nil)
-;(setq package-archives '(("melpa" . "/workspace/rammari/mirror-elpa/melpa/")
-;                         ("org"   . "/workspace/rammari/mirror-elpa/org/")
-;                         ("gnu"   . "/workspace/rammari/mirror-elpa/gnu/")))
-;(package-initialize)
+;; *Helpful Notes*
+;;----------------
+;; To help with lagginess on big files with many comments, disabole font-lock-mode
+;; M-x font-lock-mode
+;;
+;; To load a specific init file emacs -q -l ~/.emacs-alt
+;;
+;; ESC-! allows you to execute a shell command
+;;
+;; Disable auto-wrap "toggle it": M-x auto-fill-mode
+;;
+;; C<SPC> set mark, C<U>,C<SPC> return to mark
+;; Region commands:
+;; Format paragraphs: M-q
+;; Indent : C-M-\
+;; Comment: C-c C-c ,  uncomment C-u C-c C-c
+;; Comment/uncomment (region) : M-;
+;; Align  : C-u M-x align
+;; Replace : M-% ->  y:replace and go to next , n    :don't replace and go to next
+;;                   !:replace all, ,:replace , del  :skip and go to next
+;;                 C-r:recursive edit mode    , C-M-c:exit recursive edit mode
+;; Uppercase : C-x C-u , Lowercase : C-x C-l
+;;
+;; isearch history : C-s M-p/M-n
+;; remove spaces from this line to above one : M-^ , to below: C-u M-^
+;; Emacs Shell : M-x eshell
+;; Manipulate rectangles: C-x r "t:insert" "o:open" "k:kill" "y:yank"
+;; C-u [len] [character] will place len characters on a line
+;; C-x C-v revert changes to last saved version.
+;; In directory view : c:will copy and g:will refresh d:delete x:excute deletion
+;;                     s:switch between date and alpha order ^:parent directory
+;; M-g : goto line
+;; C-l : center buffer to cursor position
+;; In C: C-M-a:Beginning of a function, C-M-e:End of a function
+;; C-M-f C-M-b to find forward and backward matching brackets
+;;
+;; While using (next-error) hit C-u at end of results to reset from beginning
+;;
+;; Use Emacs Calculator with "M-x calc" :
+;; d r "choose base" 16/0/2
+;; to do 2+1 enter: 2 enter 1 enter +
+;;
+;; Printing alias: mp -l -s "\!*" <\!* | lp
+;;
+;; enriched-mode:
+;;  Alt-o d default
+;;  Alt-o b bold
+;;  Alt-o i italic
+;;  Alt-o I italic+bold
+;;  Alt-o u underline
+;;					;
+;; Moving in emacs C-f:forward C-b:backward C-p:up C-n:down
+;;                 M-f:forward word M-b:backward word
+;;                 C-d:f.delete M-v:pageup C-v:pagedown
+;;                 M-<:beginning of buffer M->:end of buffer
+;;                 C-a:beginning of line C-e:end of line
+;;
+;; AHG: In status mode: = diff file, o goto file, D diff all,
+;;                      space mark files, U revert marked/all files
+;;
+;;
+;; Searching IDs:   1. mkid in the highest directory path - do this on every pull
+;;                     Or to trim directories:
+;;alias mkidrust  'mkid ' look up MKALL
+;;                  2. M-x compile or F4
+;;                  3. gid 'search'  it is an EXACT MATCH
+;;
+;; Searching etags: 1. etags in the highest directory and include all files
+;;alias etagsrust 'etags ...' look up MKALL
+;;                  2. find-tag while pointing at the tag in your file
+;;
+;;alias mkall 'echo "making IDs";mkidrust;echo "making TAGs";etagsrust;echo "Done"'
+;;
+;; Build etags: find . -type f -iname "*.[ch]" | etags -
+;;
+;;~/.emacs.d/diredful-conf.el file:
+;;("special" "s-files" "txt-files" "h-files" "c-files")
+;;(("special" (:foreground "forestgreen") ".*ras.* io_mem.*" t nil nil nil) ("s-files" (:foreground "maroon") "s" nil nil nil nil) ("txt-files" (:foreground "red") "txt" nil nil nil nil) ("h-files" (:foreground "blue") "h" nil nil nil nil) ("c-files" (:foreground "blue") "c" nil nil nil nil))
+;; 
+;; ** Linux/Solaris setup:
+;;  *Keyboard Layout Options:
+;;  -Alt/Win Key behavior: Alt is mapped to Right Win, Super to Menu (At work)
+;;  -Key sequence to kill X server: Tick
+;;  -Miscellaneous compatibility options: Special key (Ctrl+Alt+<key>) handled in a server
+;;  *Keyboard Shortcuts:
+;;  -Switch to workspace on left of current workspace:  Ctrl+alt+Mod4+[
+;;  -Switch to workspace on right of current workspace: Ctrl+alt+Mod4+]
+;;
+;;;For debug:
+;;(setq debug-on-error t)
+;; To add/edit/del to diredful: M-x diredful-add, M-x diredful-edit, M-x diredful-del
+;;;
+;;;; To manually update prelude and the packages installed:
+;;   1.Update all bundled packages:
+;;     Just run M-x package-list-packages RET U x.
+;;   2.Update Prelude's code:
+;;     cd ~/.emacs.d
+;;     git pull
+;;
+;;; To bypass trouble connecting to internet through vpn:
+;;; Download melpa source from: https://github.com/syl20bnr/spacemacs-elpa-mirror
+;;; Then follow https://github.com/ninrod/emacs-antiproxy
+;;(setq package-enable-at-startup nil)
+;;(setq package-archives '(("melpa" . "/workspace/rammari/mirror-elpa/melpa/")
+;;                         ("org"   . "/workspace/rammari/mirror-elpa/org/")
+;;                         ("gnu"   . "/workspace/rammari/mirror-elpa/gnu/")))
+;;(package-initialize)
+;;
+;; * To add new font:
+;;  - Add *.ttf files into ~/.fonts
+;;  - execute fc-cache -f
 
 ;; Prelude shortcuts:
 ;;;;;;;;;;;;;;;;;;;;;
